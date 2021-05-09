@@ -2,30 +2,41 @@ import React, { useState, useEffect } from 'react';
 const  { getName } = require('country-list');
 
 
-function NationalityList(){
-    // hooks used for list 
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [items, setItems] = useState([]);
+class NationalityList extends React.Component {
 
-    useEffect(() => {
-        fetch("https://api.nationalize.io/?name=Hubert")
-          .then(res => res.json())
-          .then(
-            (result) => {
-              setIsLoaded(true);
-              setItems(result.country);
-            },
-            // Note: it's important to handle errors here
-            // instead of a catch() block so that we don't swallow
-            // exceptions from actual bugs in components.
-            (error) => {
-              setIsLoaded(true);
-              setError(error);
-            }
-          )
-      }, [])
-    
+    // const apiStr = "https://api.nationalize.io/?name=" +  props.name;
+
+    constructor(props) {
+      super(props)
+      this.state = {
+        username: props.nameInput
+      }
+    }
+
+    componentDidMount() {
+      fetch("https://api.nationalize.io/?name=" + this.state.username)
+        .then(res => res.json())
+        .then(
+          (result) => {
+            this.setState({
+              isLoaded: true,
+              items: result.country
+            });
+          },
+          // Note: it's important to handle errors here
+          // instead of a catch() block so that we don't swallow
+          // exceptions from actual bugs in components.
+          (error) => {
+            this.setState({
+              isLoaded: true,
+              error
+            });
+          }
+        )
+    }
+  
+    render() {
+      const { error, isLoaded, items } = this.state;
       if (error) {
         return <div>Error: {error.message}</div>;
       } else if (!isLoaded) {
@@ -41,6 +52,8 @@ function NationalityList(){
           </ul>
         );
       }
+    }
+  
     
 }
 
