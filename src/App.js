@@ -1,5 +1,7 @@
 import React from "react";
 import NationalityList from './components/NationalityList'
+import {Button} from 'react-bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 class App extends React.Component {
   constructor(props) {
@@ -20,25 +22,26 @@ class App extends React.Component {
   render (){
     let body = '';
     if (this.state.nameSubmit) {
-      body = <>
-      <h1>Below are the three most likely countries for the name {this.state.username}</h1>
-      <NationalityList nameInput={this.state.username}/>
-      </>;
+      if (this.state.username) {
+        body = <>
+        <h1>Below are the three most likely countries of origin for the name {this.state.username}</h1>
+        <NationalityList nameInput={this.state.username}/>
+        </>;
+      }
     } else {
       body = <>Please add a name</>;
     }
     return (
       <>
         <form onSubmit={this.mySubmitHandler}>
-        <h1>Hello {this.state.username}</h1>
+        <h1>Top three Countries of Most Likely Origin</h1>
+        <h2>Hello {this.state.username}</h2>
         <p>Enter your name, and submit:</p>
         <input
           type='text'
           onChange={this.myChangeHandler}
         />
-        <input
-          type='submit'
-        />
+        <Button as="input" type="submit" value="Submit" />
         </form>
         {body}
       </>  

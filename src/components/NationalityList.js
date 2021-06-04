@@ -41,6 +41,8 @@ class NationalityList extends React.Component {
         return <div>Error: {error.message}</div>;
       } else if (!isLoaded) {
         return <div>Loading...</div>;
+      } else if (items.length == 0) {
+        return <>No countries of origin found</>
       } else {
         return (
           <ul>
