@@ -1,55 +1,43 @@
 import React from "react";
-import NationalityList from './components/NationalityList'
 import {Button} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import CountryOrigin from './CountryOrigin'
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { username: '', nameSubmit: false};
-  }
-
-  mySubmitHandler = (event) => {
-    event.preventDefault();
-    this.setState({nameSubmit: true})
-    // alert("You are submitting " + this.state.username);
-  }
-  myChangeHandler = (event) => {
-    this.setState({nameSubmit:false})
-    this.setState({username: event.target.value});
-  }
-  
-  render (){
-    let body = '';
-    if (this.state.nameSubmit) {
-      if (this.state.username) {
-        body = <>
-        <h2>Below are the three most likely countries of origin for the name: {this.state.username}</h2>
-        <NationalityList nameInput={this.state.username}/>
-        </>;
-      } else {
-        body = <>You did not enter a name please enter one</>
-      }
-    } else {
-      body = <>Please add a name and click submit</>;
+    constructor (props){
+        super(props);
+        this.state = { isNationalityOn: false};
+        this.handleClick = this.handleClick.bind(this)
     }
-    return (
-      <>
-        <form onSubmit={this.mySubmitHandler}>
-        <h1>Top three Countries of Most Likely Origin</h1>
-        <h2>Hello {this.state.username}</h2>
-        <p>Enter your name, and submit:</p>
-        <input
-          type='text'
-          onChange={this.myChangeHandler}
-        />
-        <Button as="input" type="submit" value="Submit" />
-        </form>
-        {body}
-      </>  
-    )
-  }
 
+    handleClick() {
+        this.setState(prevState => ({
+            isNationalityOn: !prevState.isNationalityOn
+        }));
+    }
+
+    render () {
+        let body = <><h2>Click the Button to see go through the Nationality Application </h2></>;
+        if (this.state.isNationalityOn) {
+            body = < CountryOrigin></CountryOrigin>
+        }
+        return (
+            <div
+                style={{
+                    
+
+                }}
+                >
+
+                <h1>Name Nationality Application</h1>
+                <Button onClick={this.handleClick}>
+                    {this.state.isNationalityOn ? 'Close Application':'Click to Start'}
+                </Button>
+                {body}
+            </div>
+        );
+
+    }
 }
 
 export default App;
