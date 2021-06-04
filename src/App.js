@@ -24,12 +24,14 @@ class App extends React.Component {
     if (this.state.nameSubmit) {
       if (this.state.username) {
         body = <>
-        <h1>Below are the three most likely countries of origin for the name {this.state.username}</h1>
+        <h2>Below are the three most likely countries of origin for the name: {this.state.username}</h2>
         <NationalityList nameInput={this.state.username}/>
         </>;
+      } else {
+        body = <>You did not enter a name please enter one</>
       }
     } else {
-      body = <>Please add a name</>;
+      body = <>Please add a name and click submit</>;
     }
     return (
       <>
